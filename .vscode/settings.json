@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "fx2lib.h": "c",
+        "usbcdc.h": "c",
+        "fx2usb.h": "c",
+        "array": "c",
+        "chrono": "c",
+        "compare": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "ranges": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "variant": "c",
+        "fx2delay.h": "c",
+        "fx2debug.h": "c",
+        "fx2regs.h": "c",
+        "softi2c.h": "c",
+        "stdint.h": "c",
+        "fx2i2c.h": "c",
+        "misc.h": "c"
+    }
+}
