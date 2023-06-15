@@ -117,12 +117,9 @@ static uint8_t _i2c_write(uint8_t *buf, uint8_t sz)
 }
 
 static uint8_t _pending_flag;
-static struct i2c_cmd _pending_req;
 
-static void i2c_do(struct i2c_cmd *cmd)
+static void i2c_do(uint8_t len, uint8_t rd, uint8_t _cmd, uint8_t addr)
 {
-    uint8_t len = cmd->len;
-    uint16_t addr = (cmd->addr << 1);
 
     if (len > sizeof(EP0BUF))
     {
@@ -130,12 +127,12 @@ static void i2c_do(struct i2c_cmd *cmd)
         return;
     }
 
-    if (cmd->flags & I2C_M_RD)
+    if (rd)
     {
         addr |= 1;
     }
 
-    if (cmd->cmd & CMD_I2C_BEGIN)
+    if (_cmd & CMD_I2C_BEGIN)
     {
         if (_i2c_start(addr))
         {
@@ -149,7 +146,7 @@ static void i2c_do(struct i2c_cmd *cmd)
         }
     }
 
-    if (cmd->flags & I2C_M_RD)
+    if (rd)
     {
         _i2c_start(addr); // repeated start
         while (EP0CS & _BUSY)
@@ -163,7 +160,7 @@ static void i2c_do(struct i2c_cmd *cmd)
         ACK_EP0();
     }
 
-    if (cmd->cmd & CMD_I2C_END)
+    if (_cmd & CMD_I2C_END)
     {
         _i2c_stop();
     }
@@ -240,7 +237,12 @@ int main()
             if (_pending_flag == 1)
             {
                 _pending_flag = 0;
-                i2c_do((struct i2c_cmd *)SETUPDAT);
+                struct i2c_cmd *cmd = (struct i2c_cmd *)SETUPDAT;
+                uint8_t addr = (cmd->addr << 1);
+                uint8_t len = cmd->len;
+                uint8_t _cmd = cmd->cmd;
+                uint8_t rd = cmd->flags & I2C_M_RD;
+                i2c_do(len, rd, _cmd, addr);
             }
             else if (_pending_flag == 2)
             {
