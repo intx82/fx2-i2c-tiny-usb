@@ -93,7 +93,7 @@ static uint8_t _i2c_start(uint8_t addr)
     return i2c_start(addr);
 }
 
-static void _i2c_stop()
+static void _i2c_stop(void)
 {
     // delay_us(100);
     i2c_stop();
@@ -226,7 +226,7 @@ void handle_usb_setup(__xdata struct usb_req_setup *req)
     STALL_EP0();
 }
 
-int main()
+int main(void)
 {
     CPUCS = _CLKSPD1;
     usb_init(true);

@@ -13,7 +13,7 @@ uint8_t i2c_start(uint8_t addr);
 /**
  * @brief Send 'Stop' signal into bus
 */
-void i2c_stop();
+void i2c_stop(void);
 
 /**
  * @brief Reads from the bus, if read less than provided sz - returns 0

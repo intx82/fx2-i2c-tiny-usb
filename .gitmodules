@@ -1,0 +1,3 @@
+[submodule "libfx2"]
+	path = libfx2
+	url = git@github.com:intx82/libfx2.git
